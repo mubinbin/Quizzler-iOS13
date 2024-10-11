@@ -25,9 +25,15 @@ struct QuizBrain {
     ]
     
     var quizNum: Int = 0
+    var score = 0
     
-    func isCorrectAnswer(_ userAnswer: String?) -> Bool {
-        return userAnswer == quiz[quizNum].answer
+    mutating func isCorrectAnswer(_ userAnswer: String?) -> Bool {
+        if userAnswer == quiz[quizNum].answer {
+            score += 1
+            return true
+        } else {
+            return false
+        }
     }
     
     func getQuestion() -> String {
@@ -38,11 +44,16 @@ struct QuizBrain {
         if quizNum + 1 < quiz.count {
             quizNum += 1
         } else {
+            score = 1
             quizNum = 0
         }
     }
     
     func getProgress() -> Float {
         return Float(quizNum + 1) / Float(quiz.count)
+    }
+    
+    func getScore() -> String {
+        return "Score: \(score)/\(quiz.count)"
     }
 }
